@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        // Usamos Java 1.8 y Maven 3.9.9 configurados en Jenkins
-        jdk 'Java_1.8'   // Asegúrate de configurar este JDK en Jenkins
-        maven 'Maven_3.9.9' // Asegúrate de configurar esta versión en Jenkins
-    }
-
     environment {
         MAVEN_HOME = 'C:/Program Files/apache-maven-3.9.9'
         PATH = "${env.PATH}:${env.MAVEN_HOME}/bin"
