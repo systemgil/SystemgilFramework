@@ -29,7 +29,7 @@ pipeline {
                 // Ejecutar las pruebas con Maven y TestNG
                 script {
                     // Usar comillas dobles para manejar espacios en la ruta
-                    sh '"${MAVEN_HOME}\\bin\\"mvn test"
+                    sh '"${MAVEN_HOME}\\bin\\"mvn test'
                 }
             }
         }
