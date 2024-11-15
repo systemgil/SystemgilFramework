@@ -7,6 +7,11 @@ pipeline {
         maven 'Maven_3.9.9' // Asegúrate de configurar esta versión en Jenkins
     }
 
+    environment {
+        MAVEN_HOME = 'C:/Program Files/apache-maven-3.9.9'
+        PATH = "${env.PATH}:${env.MAVEN_HOME}/bin"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -18,21 +23,30 @@ pipeline {
         stage('Build') {
             steps {
                 // Compilar el proyecto
-                sh 'mvn clean compile'
+                script {
+                    // Usar comillas dobles para manejar espacios en la ruta
+                    sh "\"${env.MAVEN_HOME}/bin/mvn\" clean compile"
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
                 // Ejecutar las pruebas con Maven y TestNG
-                sh 'mvn test'
+                script {
+                    // Usar comillas dobles para manejar espacios en la ruta
+                    sh "\"${env.MAVEN_HOME}/bin/mvn\" test"
+                }
             }
         }
 
         stage('Generate Reports') {
             steps {
                 // Generar reportes de Surefire para TestNG
-                sh 'mvn surefire-report:report'
+                script {
+                    // Usar comillas dobles para manejar espacios en la ruta
+                    sh "\"${env.MAVEN_HOME}/bin/mvn\" surefire-report:report"
+                }
             }
         }
     }
