@@ -19,7 +19,7 @@ pipeline {
                 // Compilar el proyecto
                 script {
                     // Usar comillas dobles para manejar espacios en la ruta
-                    sh "\"${env.MAVEN_HOME}/bin/mvn\" clean compile"
+                    sh '"${MAVEN_HOME}\\bin\\mvn" clean install'
                 }
             }
         }
