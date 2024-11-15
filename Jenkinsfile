@@ -2,8 +2,8 @@ pipeline {
     agent any
 
    environment { 
-       MAVEN_HOME = '/Program Files/apache-maven-3.9.9' 
-       PATH = "${env.PATH}:${env.MAVEN_HOME}/bin" 
+       MAVEN_HOME = '"C:/Program Files/apache-maven-3.9.9"' 
+       PATH = "${env.PATH}:${env.MAVEN_HOME}/bin"
        
    }
 
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // Compilar el proyecto (ejecuta Maven)
                 script {
-                    sh "${MAVEN_HOME}/bin/mvn clean install"
+                    sh '"${env.MAVEN_HOME}\\bin\\mvn" clean install'
                 }
             }
         }
