@@ -1,51 +1,47 @@
 pipeline {
     agent any
 
-   environment { 
-       MAVEN_HOME = '"C:/Program Files/apache-maven-3.9.9"' 
-       PATH = "${env.PATH}:${env.MAVEN_HOME}/bin"
-       
-   }
+    tools {
+        // Usamos Java 1.8 y Maven 3.9.9 configurados en Jenkins
+        jdk 'Java_1.8'   // Asegúrate de configurar este JDK en Jenkins
+        maven 'Maven_3.9.9' // Asegúrate de configurar esta versión en Jenkins
+    }
 
-    stages { 
+    stages {
         stage('Checkout') {
-            steps { 
-                // Clonar el repositorio desde GitHub desde la rama main 
-                git branch: 'main', url: 'https://github.com/systemgil/SystemgilFramework.git' 
-                
-            } 
+            steps {
+                // Clonar el repositorio de GitHub
+                git branch: 'main', url: 'https://github.com/systemgil/SystemgilFramework.git'
+            }
         }
-    
+
         stage('Build') {
             steps {
-                // Compilar el proyecto (ejecuta Maven)
-                script {
-                    sh '"${env.MAVEN_HOME}\\bin\\mvn" clean install'
-                }
+                // Compilar el proyecto
+                sh 'mvn clean compile'
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Ejecutar las pruebas de TestNG con Maven
-                script {
-                    sh "${MAVEN_HOME}/bin/mvn test"
-                }
+                // Ejecutar las pruebas con Maven y TestNG
+                sh 'mvn test'
             }
         }
 
-        stage('Post-Test Actions') {
+        stage('Generate Reports') {
             steps {
-                // Acciones después de ejecutar las pruebas, como limpiar o notificar
-                echo 'Pruebas ejecutadas correctamente'
+                // Generar reportes de Surefire para TestNG
+                sh 'mvn surefire-report:report'
             }
         }
     }
 
     post {
         always {
-            // Limpiar recursos, por ejemplo, destruir contenedores o cerrar sesión si es necesario
-            echo 'Pipeline completado'
+            // Archivar los reportes generados
+            archiveArtifacts artifacts: 'target/surefire-reports/*.xml', allowEmptyArchive: true
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }
