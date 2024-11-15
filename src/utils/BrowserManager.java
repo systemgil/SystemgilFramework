@@ -18,7 +18,7 @@ public class BrowserManager {
          //System.setProperty("webdriver.edge.driver", "config/input/msedgedriver.exe");
             driver = new EdgeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
-         //System.setProperty("webdriver.gecko.driver", "config/input/geckodriver.exe");
+         //System.setProperty("webdriver.gecko.driver", "config/input/geckodriver.exe");//
             driver = new FirefoxDriver();
         } else {
             throw new IllegalArgumentException("Browser not supported: " + browser);
