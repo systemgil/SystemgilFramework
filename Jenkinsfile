@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+		JDK_HOME = 'C:/Program Files/Java/jdk1.8.0_202'
         MAVEN_HOME = 'C:/Program Files/apache-maven-3.9.9'
         PATH = "${env.PATH}:${env.MAVEN_HOME}/bin"
     }
