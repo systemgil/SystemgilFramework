@@ -19,8 +19,13 @@ pipeline {
             steps {
                 // Compilar el proyecto
                 script {
-                    // Usar comillas dobles para manejar espacios en la ruta
-                    sh '"${MAVEN_HOME}\\bin\\"mvn clean install'
+                   try {
+    					 sh '"${MAVEN_HOME}\\bin\\"mvn clean install'
+					} catch (hudson.AbortException e) {
+    				echo "Error en el comando: ${e}"
+    				currentBuild.result = 'FAILURE'
+}
+                   
                 }
             }
         }
