@@ -19,7 +19,7 @@ pipeline {
                 // Compilar el proyecto
                 script {
                    try {
-    					 sh "\"${MAVEN_HOME}/bin/\"mvn clean install"
+    					 sh "\"${MAVEN_HOME}/bin\" mvn clean install"
 					} catch (hudson.AbortException e) {
     				echo "Error en el comando: ${e}"
     				currentBuild.result = 'FAILURE'
